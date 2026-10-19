@@ -1,0 +1,24 @@
+/* i added a:hover here so that the style is more visible */
+
+#top-nav a:active, a:hover {
+    background-color: #CC0000;
+    color: #FFFFFF
+}
+
+/* main */
+
+main {
+    padding: 1.5em;
+}
+
+/* disclaimer */
+
+footer {
+    background-color: #e0e0e0;
+    padding: 1em;
+    text-align: center;
+}
+
+footer p {
+    margin: 0;
+}
