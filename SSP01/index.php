@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-
     scale=1.0">
-    <meta name="author" content="LastName, FirstName">
+    <meta name="author" content="Fountain, Scarlett">
     <meta name="description" content="CS2623 Server-Side Programming
     — SSP01">
     <meta name="keywords" content="PHP, server-side, CS2623, OCCC">

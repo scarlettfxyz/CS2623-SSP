@@ -1,0 +1,92 @@
+/* ============================================================
+   CS2623 SSP02 — table.css
+   Author: Fountain, Scarlett
+   COLORS
+   Table header: #1B2A6B (navy)
+   Header text:  #FFFFFF (white)
+   Even rows:    #E8EEF4 (light blue)
+   Odd rows:     #FFFFFF (white)
+   Caption:      #006B7D (teal)
+   Borders:      #CCCCCC (gray)
+   ============================================================ */
+
+/* Position the left navigation beside the main content. */
+
+#page-wrapper {
+    display: flex;
+    align-items: flex-start;
+}
+
+#left-nav {
+    flex: 0 0 11em;
+    padding: 1em;
+}
+
+#left-nav ul {
+    margin: 0;
+    padding-left: 1.25em;
+}
+
+#left-nav li {
+    margin-bottom: 0.75em;
+}
+
+#page-wrapper main {
+    flex: 1;
+    min-width: 0;
+}
+
+/* Weekly planner */
+#weekly-planner {
+    width: 80%;
+    border-collapse: collapse;
+    margin: 1.5em auto;
+    font-family: Calibri, Tahoma, Arial, sans-serif;
+}
+
+#weekly-planner caption {
+    font-size: 1.1em;
+    font-weight: bold;
+    color: #006B7D;
+    margin-bottom: 0.5em;
+}
+
+#weekly-planner th {
+    background-color: #1B2A6B;
+    color: #FFFFFF;
+    padding: 0.6em 1em;
+    text-align: left;
+}
+
+#weekly-planner td {
+    padding: 0.5em 1em;
+    border: 1px solid #CCCCCC;
+}
+
+#weekly-planner tbody tr:nth-child(odd) td {
+    background-color: #FFFFFF;
+}
+
+#weekly-planner tbody tr:nth-child(even) td {
+    background-color: #E8EEF4;
+}
+
+/* Stack the navigation and content on smaller screens. */
+@media (max-width: 600px) {
+    #page-wrapper {
+        flex-direction: column;
+    }
+
+    #left-nav {
+        flex: auto;
+        width: 100%;
+    }
+
+    #page-wrapper main {
+        width: 100%;
+    }
+
+    #weekly-planner {
+        width: 100%;
+    }
+}
