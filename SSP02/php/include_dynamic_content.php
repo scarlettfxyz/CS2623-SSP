@@ -13,14 +13,17 @@
 	</thead>
 	<tbody>
 		<?php
-		// Generate planner rows for days 1 through 7.
-		for ($counter = 1; $counter < 8; $counter += 1) {
-			echo '<tr>';
-			echo '<td>' . htmlspecialchars((string) $counter, ENT_QUOTES, 'UTF-8') . '</td>';
-			echo '<td>' . htmlspecialchars('Study for CS2623', ENT_QUOTES, 'UTF-8') . '</td>';
-			echo '<td>' . htmlspecialchars(number_format($counter / 2, 1), ENT_QUOTES, 'UTF-8') . '</td>';
-			echo '</tr>';
-		}
+            // Generate planner rows for days 1 through 7.
+            for ($counter = 1; $counter < 8; $counter += 1) {
+                // Calculate study hours and format to one decimal place.
+                $hours = number_format($counter / 2, 1);
+
+                echo '<tr>';
+                echo '<td>' . htmlspecialchars((string) $counter, ENT_QUOTES, 'UTF-8') . '</td>';
+                echo '<td>' . htmlspecialchars('Study for CS2623', ENT_QUOTES, 'UTF-8') . '</td>';
+                echo '<td>' . htmlspecialchars($hours, ENT_QUOTES, 'UTF-8') . '</td>';
+                echo '</tr>';
+            }
 		?>
 	</tbody>
 </table>

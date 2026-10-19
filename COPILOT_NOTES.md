@@ -12,7 +12,8 @@ went back to main.css and let copilot add the rest of the styles. it looks okay 
 
 ## Rejected
 
-
+copilot wanted zebra stripes and a contrasting header, i rejected this as both styles already exist in table.css
 
 ## Improved
 
+it was suggested i combine the row output or used alternative php syntax. i adapted its readability suggestion by keeping seperate output statements and moving the hours calc into $hours
