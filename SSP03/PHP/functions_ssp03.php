@@ -24,3 +24,12 @@ function fn_tableOpen(string $caption): void
     echo "    </thead>\n";
     echo "    <tbody>\n";
 }
+
+/**
+ * closes planner body and table
+ */
+function fn_tableClose(): void
+{
+    echo "    </tbody>\n";
+    echo "</table>\n";
+}
