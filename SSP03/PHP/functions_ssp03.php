@@ -97,3 +97,32 @@ function fn_dayOfWeek(int $day_num): string
         return 'Unknown';
     }
 }
+
+/**
+ * returns plans for the day
+ *
+ * @param int $day_num
+ * @return string 
+ */
+function fn_dayDetails(int $day_num): string
+{
+    switch ($day_num) {
+        case 1:
+            return 'study japanese';
+        case 2:
+            return 'study html and css';
+        case 3:
+            return 'study astronomy';
+        case 4:
+            return 'study php';
+        case 5:
+            return 'review everything';
+        case 6:
+            return 'do classwork';
+        case 7:
+            return 'finish and submit everything';
+        default:
+            return 'empty schedule';
+    }
+}
+
