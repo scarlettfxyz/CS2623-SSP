@@ -1,6 +1,20 @@
 <?php
 declare(strict_types=1);
-    ?>
+
+        $method = filter_input(INPUT_SERVER, 'REQUEST_METHOD')
+            ?? ($_SERVER['REQUEST_METHOD'] ?? 'GET');
+
+    if ($method === 'POST') {
+            $first = filter_input(INPUT_POST, 'first_name') ?? '';
+            $last = filter_input(INPUT_POST, 'last_name') ?? '';
+            $email = filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL);
+            $age = filter_input(INPUT_POST, 'age', FILTER_VALIDATE_INT);
+            $gender = filter_input(INPUT_POST, 'gender') ?? 'Not specified';
+            $country = filter_input(INPUT_POST, 'country') ?: 'Not specified';
+            $comments = filter_input(INPUT_POST, 'comments') ?? '';
+    }
+?>
+
     <!DOCTYPE html>
         <html lang="en">
         <head>
@@ -60,6 +74,33 @@ declare(strict_types=1);
 
                 <button type="submit">Submit</button>
             </form>
+
+                <?php if ($method === 'POST'): ?>
+                    <section>
+                        <h2>Submitted Information</h2>
+
+                        <p><strong>Name:</strong>
+                            <?= htmlspecialchars($first . ' ' . $last, ENT_QUOTES, 'UTF-8') ?>
+                        </p>
+                        <p><strong>Email:</strong>
+                            <?= htmlspecialchars($email ?: '(missing or invalid)', ENT_QUOTES, 'UTF-8') ?>
+                        </p>
+                        <p><strong>Age:</strong>
+                            <?= htmlspecialchars(is_int($age) ? (string) $age : '(missing or invalid)', ENT_QUOTES, 'UTF-8') ?>
+                        </p>
+                        <p><strong>Gender:</strong>
+                            <?= htmlspecialchars($gender, ENT_QUOTES, 'UTF-8') ?>
+                        </p>
+                        <p><strong>Country:</strong>
+                            <?= htmlspecialchars($country, ENT_QUOTES, 'UTF-8') ?>
+                        </p>
+                        <p><strong>Comments:</strong><br>
+                            <?= nl2br(htmlspecialchars($comments, ENT_QUOTES, 'UTF-8')) ?>
+                        </p>
+                    </section>
+                <?php endif; ?>
+
+
         </main>
     </body>
 </html>
