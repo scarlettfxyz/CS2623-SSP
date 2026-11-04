@@ -1,6 +1,55 @@
 <?php
 declare(strict_types=1);
+
+    $method = filter_input(INPUT_SERVER, 'REQUEST_METHOD')
+        ?? ($_SERVER['REQUEST_METHOD'] ?? 'GET');
+
+        $errors = [];
+        $customer = '';
+        $product = '';
+        $quantity = null;
+        $payment = '';
+        $instructions = '';
+        $options = [];
+
+    if ($method === 'POST') {
+        $customer = trim((string) (filter_input(INPUT_POST, 'cust_name') ?? ''));
+        $product = (string) (filter_input(INPUT_POST, 'product') ?? '');
+        $quantity = filter_input(INPUT_POST, 'quantity', FILTER_VALIDATE_INT, [
+            'options' => ['min_range' => 1],
+
+        ]);
+        $payment = (string) (filter_input(INPUT_POST, 'payment') ?? '');
+        $instructions = (string) (filter_input(INPUT_POST, 'instructions') ?? '');
+
+
+        $options = filter_input(
+            INPUT_POST,
+            'options',
+            FILTER_SANITIZE_SPECIAL_CHARS,
+            FILTER_REQUIRE_ARRAY
+        ) ?? [];
+
+
+        if (!is_array($options)) {
+            $options = [];
+        }
+
+        if ($customer === '') {
+            $errors[] = 'Enter a customer name.';
+        }
+        if ($product === '') {
+            $errors[] = 'Select a product.';
+        }
+        if (!is_int($quantity)) {
+            $errors[] = 'Enter a whole-number quantity of at least 1.';
+        }
+        if (!in_array($payment, ['credit', 'debit', 'paypal'], true)) {
+            $errors[] = 'Select a payment method.';
+        }
+    }
 ?>
+
     <!DOCTYPE html>
         <html lang="en">
         <head>
@@ -57,6 +106,50 @@ declare(strict_types=1);
 
                 <p><button type="submit">Submit order</button></p>
             </form>
+<?php if ($method === 'POST'): ?>
+    <?php if ($errors !== []): ?>
+        <section>
+            <h2>Please correct your order</h2>
+            <ul>
+                <?php foreach ($errors as $error): ?>
+                    <li><?= htmlspecialchars($error, ENT_QUOTES, 'UTF-8') ?></li>
+                <?php endforeach; ?>
+            </ul>
+        </section>
+            <?php else: ?>
+                <section>
+                    <h2>Order Summary</h2>
+
+                    <p><strong>Customer:</strong>
+                        <?= htmlspecialchars($customer, ENT_QUOTES, 'UTF-8') ?>
+                    </p>
+                    <p><strong>Product:</strong>
+                        <?= htmlspecialchars($product, ENT_QUOTES, 'UTF-8') ?>
+                    </p>
+                    <p><strong>Quantity:</strong>
+                        <?= htmlspecialchars((string) $quantity, ENT_QUOTES, 'UTF-8') ?>
+                    </p>
+                    <p><strong>Payment:</strong>
+                        <?= htmlspecialchars($payment, ENT_QUOTES, 'UTF-8') ?>
+                    </p>
+
+                    <h3>Selected Add-ons</h3>
+                    <?php if ($options === []): ?>
+                        <p>None selected.</p>
+                    <?php else: ?>
+                        <ul>
+                            <?php foreach ($options as $option): ?>
+                                <li><?= htmlspecialchars((string) $option, ENT_QUOTES, 'UTF-8') ?></li>
+                            <?php endforeach; ?>
+                        </ul>
+                    <?php endif; ?>
+
+                    <p><strong>Special instructions:</strong><br>
+                        <?= nl2br(htmlspecialchars($instructions, ENT_QUOTES, 'UTF-8')) ?>
+                    </p>
+                </section>
+            <?php endif; ?>
+        <?php endif; ?>
         </main>
     </body>
 </html>
