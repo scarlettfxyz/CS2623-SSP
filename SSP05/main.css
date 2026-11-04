@@ -1,0 +1,66 @@
+/* Shared layout for the SSP05 hub and both exercises. */
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 1rem;
+    background: #f4f6fa;
+    color: #222;
+    font: 1rem/1.5 Arial, sans-serif;
+}
+
+main,
+header {
+    max-width: 42rem;
+    margin: 1rem auto;
+    padding: 1.25rem;
+    background: #fff;
+    border: 1px solid #d5dce8;
+    border-radius: 0.5rem;
+}
+
+h1,
+h2 {
+    color: #17365d;
+}
+
+form > p > label {
+    display: block;
+    font-weight: bold;
+}
+
+input[type="text"],
+input[type="email"],
+select,
+textarea {
+    width: 100%;
+    padding: 0.5rem;
+    font: inherit;
+}
+
+fieldset {
+    margin: 1rem 0;
+    border: 1px solid #a7b5c9;
+}
+
+fieldset label {
+    display: block;
+}
+
+button {
+    padding: 0.55rem 1rem;
+    border: 0;
+    border-radius: 0.25rem;
+    background: #17365d;
+    color: #fff;
+    font: inherit;
+}
+
+main > section {
+    margin-top: 1.5rem;
+    padding: 1rem;
+    background: #edf3fb;
+    border-left: 4px solid #17365d;
+}
