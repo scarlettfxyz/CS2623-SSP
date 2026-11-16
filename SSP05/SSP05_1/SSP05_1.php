@@ -18,6 +18,7 @@ declare(strict_types=1);
     <!DOCTYPE html>
         <html lang="en">
         <head>
+            <link rel="stylesheet" href="main.css">
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <title>SSP05 Exercise 7-1: Personal Info Form</title>

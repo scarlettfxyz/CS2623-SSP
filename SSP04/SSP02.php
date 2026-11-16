@@ -1,7 +1,7 @@
 <?php
 /*
 * SSP02.php — CS2623 Week 1
-* Dynamic PHP page with include files.
+* dynamic php with include files
 */
 ?>
 <!DOCTYPE html>
@@ -10,7 +10,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-
         scale=1.0">
-        <title>CS2623 SSP02: LastName</title>
+        <title>CS2623 SSP02: Fountain</title>
             <link rel="stylesheet" href="../SSP01/main.css">
             <link rel="stylesheet" href="CSS/table.css">
     </head>

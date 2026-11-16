@@ -129,3 +129,17 @@ footer {
 #string-results tbody tr:nth-child(even) {
     background-color: #E0E0E0;
 }
+
+/* date and time result sections */
+section {
+    max-width: 900px;
+    margin: 1em auto;
+    padding: 1.25em;
+    border: 1px solid #CCCCCC;
+    background-color: #FFFFFF;
+}
+
+section h2 {
+    margin-top: 0;
+    color: #1B2A6B;
+}
