@@ -32,6 +32,18 @@ function validateContact(array $data): array
         $errors[] = 'Product code must contain two uppercase letters followed by four digits.';
     }
 
+    $quantity = filter_var(
+    $data['quantity'] ?? '',
+    FILTER_VALIDATE_INT,
+    ['options' => ['min_range' => 1]]
+    );
+
+    if ($quantity === false) {
+        $errors[] = 'Quantity must be a whole number of at least 1.';
+    } else {
+        $data['quantity'] = $quantity;
+    }
+
     if ($errors) {
         throw new ValidationException(implode(' | ', $errors));
     }
@@ -57,6 +69,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         'product_code' => filter_input(INPUT_POST, 'product_code', FILTER_DEFAULT) ?? '',
 
         'message' => filter_input(INPUT_POST, 'message', FILTER_DEFAULT) ?? '',
+
+        'quantity' => filter_input(INPUT_POST, 'quantity', FILTER_DEFAULT) ?? '',
     ];
 
     try {
@@ -95,8 +109,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <li>ZIP: <?= htmlspecialchars($result['zip'], ENT_QUOTES, 'UTF-8') ?></li>
             <li>Website: <?= htmlspecialchars($result['website'], ENT_QUOTES, 'UTF-8') ?></li>
             <li>Product code: <?= htmlspecialchars($result['product_code'], ENT_QUOTES, 'UTF-8') ?></li>
+            <li>Quantity: <?= htmlspecialchars($result['quantity'], ENT_QUOTES, 'UTF-8') ?></li>
         </ul>
-        
+
         <h2>Message</h2>
             <p><?= nl2br(htmlspecialchars($result['message'], ENT_QUOTES, 'UTF-8')) ?></p>
     <?php endif; ?>
@@ -107,6 +122,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <label>ZIP: <input type="text" name="zip"></label><br>
         <label>Website: <input type="text" name="website"></label><br>
         <label>Product code (AB1234): <input type="text" name="product_code"></label><br>
+        <label for="quantity">Quantity:</label>
+        <input type="text" id="quantity" name="quantity" inputmode="numeric"><br>
         <label>
             Notes:<br>
             <textarea name="notes" rows="4" cols="40"></textarea>
