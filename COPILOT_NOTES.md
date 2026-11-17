@@ -12,8 +12,8 @@ went back to main.css and let copilot add the rest of the styles. it looks okay 
 
 ## Rejected
 
-copilot wanted zebra stripes and a contrasting header, i rejected this as both styles already exist in table.css
+
 
 ## Improved
 
-it was suggested i combine the row output or used alternative php syntax. i adapted its readability suggestion by keeping seperate output statements and moving the hours calc into $hours
+code checked fine however i could not log in as the attached pdf made the first line begin with a note and not the declaration. it was simple but i didnt see it (i am tired) copilot improved it by moving the notes under the declaring strict types

@@ -1,8 +1,9 @@
-// dashboard.php
+<?php
+declare(strict_types=1);
 
-<?php declare(strict_types=1);
-require 'auth.php'; // redirects if not logged in
+require __DIR__ . '/auth.php';
 ?>
+
 <!DOCTYPE html><html lang="en">
 <head><meta charset="UTF-8"><title>Dashboard</title></head>
 <body>
