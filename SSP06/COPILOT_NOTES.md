@@ -10,7 +10,7 @@ it was suggested i add a link to get from my dashboard to my cart in ssp06. i ac
 
 ## Rejected
 
-
+copilot was suggesting that i turn ssp06 and 07 into a blockchain and wanted to format it like one, i did not want this
 
 ## Improved
 
