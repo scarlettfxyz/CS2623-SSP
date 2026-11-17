@@ -35,6 +35,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     exit;
 }
 
+$itemCount = array_sum($_SESSION['cart']);
+
 // Calculate cart total
 $total = 0.0;
 foreach ($_SESSION['cart'] as $pid => $qty) {
@@ -43,6 +45,8 @@ foreach ($_SESSION['cart'] as $pid => $qty) {
     }
 }
 ?>
+
+<h1>Cart (<?= $itemCount ?> <?= $itemCount === 1 ? 'item' : 'items' ?>)</h1>
 
 <!-- Product catalog display -->
 <?php foreach ($products as $p): ?>
@@ -95,4 +99,6 @@ foreach ($_SESSION['cart'] as $pid => $qty) {
     </table>
 <?php endif; ?>
 
-<a href="cart_clear.php">Clear Cart</a>
+<form method="post" action="cart_clear.php">
+    <button type="submit">Clear Cart</button>
+</form>
