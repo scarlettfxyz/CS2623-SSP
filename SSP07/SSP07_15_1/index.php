@@ -55,6 +55,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         'website' => filter_input(INPUT_POST, 'website', FILTER_DEFAULT) ?? '',
         
         'product_code' => filter_input(INPUT_POST, 'product_code', FILTER_DEFAULT) ?? '',
+
+        'message' => filter_input(INPUT_POST, 'message', FILTER_DEFAULT) ?? '',
     ];
 
     try {
@@ -94,6 +96,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <li>Website: <?= htmlspecialchars($result['website'], ENT_QUOTES, 'UTF-8') ?></li>
             <li>Product code: <?= htmlspecialchars($result['product_code'], ENT_QUOTES, 'UTF-8') ?></li>
         </ul>
+        
+        <h2>Message</h2>
+            <p><?= nl2br(htmlspecialchars($result['message'], ENT_QUOTES, 'UTF-8')) ?></p>
     <?php endif; ?>
 
     <form method="post">
@@ -106,6 +111,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             Notes:<br>
             <textarea name="notes" rows="4" cols="40"></textarea>
         </label><br>
+        <label for="message">Message:</label><br>
+        <textarea id="message" name="message" rows="4" cols="40"></textarea><br>
         <button type="submit">Validate</button>
     </form>
 </body>
