@@ -37,6 +37,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
+// Apply Unix file permissions when running on filezilla server
+if (is_file($logFile) && PHP_OS_FAMILY !== 'Windows') {
+    chmod($logFile, 0644);
+}
+
 if (filter_input(INPUT_GET, 'action') === 'download') {
     if (!is_file($logFile)) {
         http_response_code(404);
@@ -105,5 +110,6 @@ $logSize = is_file($logFile) ? filesize($logFile) : 0;
             <li><?= htmlspecialchars(basename($f), ENT_QUOTES, 'UTF-8') ?></li>
         <?php endforeach; ?>
     </ul>
+    <p><a href="../index.html">Back to index...</a></p>
 </body>
 </html>

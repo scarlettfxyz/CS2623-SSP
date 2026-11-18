@@ -199,5 +199,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $start > $end) {
             <?php } while ($row <= 5); ?>
         </table>
     <?php endif; ?>
+    <p><a href="../index.html">Back to index...</a></p>
 </body>
 </html>
