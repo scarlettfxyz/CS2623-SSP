@@ -11,17 +11,42 @@ if (!is_dir($dataDir)) {
 
 // Handle form POST
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $entry = filter_input(INPUT_POST, 'entry', FILTER_SANITIZE_SPECIAL_CHARS) ?? '';
-    $entry = trim($entry);
+    $action = filter_input(INPUT_POST, 'action') ?? 'save';
 
-    if ($entry !== '') {
-        $now = new DateTime('now', new DateTimeZone('America/Chicago'));
-        $line = $now->format('Y-m-d H:i:s') . ' — ' . $entry . PHP_EOL;
-        file_put_contents($logFile, $line, FILE_APPEND | LOCK_EX);
-        $message = 'Entry saved.';
-    } else {
-        $message = 'Entry cannot be empty.';
+    if ($action === 'clear') {
+        $saved = file_put_contents($logFile, '', LOCK_EX);
+        $message = $saved !== false
+            ? 'Log cleared.'
+            : 'Unable to clear the log.';
+    } elseif ($action === 'save') {
+        $entry = trim((string) (
+            filter_input(INPUT_POST, 'entry', FILTER_DEFAULT) ?? ''
+        ));
+
+        if ($entry !== '') {
+            $now = new DateTime('now', new DateTimeZone('America/Chicago'));
+            $line = $now->format('Y-m-d H:i:s') . ' — ' . $entry . PHP_EOL;
+
+            $saved = file_put_contents($logFile, $line, FILE_APPEND | LOCK_EX);
+            $message = $saved !== false
+                ? 'Entry saved.'
+                : 'Unable to save the entry.';
+        } else {
+            $message = 'Entry cannot be empty.';
+        }
     }
+}
+
+if (filter_input(INPUT_GET, 'action') === 'download') {
+    if (!is_file($logFile)) {
+        http_response_code(404);
+        exit('No log file is available to download.');
+    }
+
+    header('Content-Type: text/plain; charset=UTF-8');
+    header('Content-Disposition: attachment; filename="log.txt"');
+    readfile($logFile);
+    exit;
 }
 
 // Read log file
@@ -34,6 +59,10 @@ $files = array_filter(
     scandir($dataDir),
     fn($f) => is_file($dataDir . $f)
 );
+
+// Clear file status cache to ensure accurate file size
+clearstatcache(true, $logFile);
+$logSize = is_file($logFile) ? filesize($logFile) : 0;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -54,7 +83,14 @@ $files = array_filter(
             <input type="text" name="entry" maxlength="200">
         </label>
         <button type="submit">Save Entry</button>
+
+        <form method="post">
+            <button type="submit" name="action" value="clear">Clear Log</button>
+        </form>
     </form>
+
+    <p><a href="?action=download">Download Log</a></p>
+    <p>Log size: <?= htmlspecialchars(number_format((float) $logSize), ENT_QUOTES, 'UTF-8') ?> bytes</p>
 
     <h2>Log Contents</h2>
     <?php if ($fileContent !== ''): ?>
