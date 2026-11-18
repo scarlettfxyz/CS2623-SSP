@@ -10,6 +10,9 @@ $searchFor = filter_input(INPUT_POST, 'search', FILTER_SANITIZE_SPECIAL_CHARS) ?
 $lower = strtolower($inputText);
 $upper = strtoupper($inputText);
 $trimmed = trim($inputText);
+$wordCount = $trimmed === ''
+    ? 0
+    : count(explode(' ', $trimmed));
 $length = strlen($trimmed);
 $vowelsReplaced = str_replace(
     ['a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U'],
@@ -22,6 +25,9 @@ $contains = $searchFor !== ''
     : null;
 $startsWith = $searchFor !== ''
     ? str_starts_with(strtolower($trimmed), strtolower($searchFor))
+    : null;
+$endsWith = $searchFor !== ''
+    ? str_ends_with(strtolower($trimmed), strtolower($searchFor))
     : null;
 
 // ── Number operations ──────────────────────────────────────────
@@ -80,11 +86,13 @@ $daysUntilXmas = (new DateTime('now', $tz))->diff(new DateTime('December 25', $t
             <li>Vowels replaced: <?= htmlspecialchars($vowelsReplaced, ENT_QUOTES, 'UTF-8') ?></li>
             <li>First 10 characters: <?= htmlspecialchars($firstTen, ENT_QUOTES, 'UTF-8') ?></li>
             <?php if ($contains !== null): ?>
-                <li>
+            <li>
                     Contains "<?= htmlspecialchars($searchFor, ENT_QUOTES, 'UTF-8') ?>":
                     <?= $contains ? 'Yes' : 'No' ?>
-                </li>
-                <li>Starts with it: <?= $startsWith ? 'Yes' : 'No' ?></li>
+            </li>
+            <li>Starts with it: <?= $startsWith ? 'Yes' : 'No' ?></li>
+            <li>Ends with it: <?= $endsWith ? 'Yes' : 'No' ?></li>
+            <li>Word count: <?= htmlspecialchars((string) $wordCount, ENT_QUOTES, 'UTF-8') ?></li>
             <?php endif; ?>
         </ul>
 
