@@ -15,7 +15,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $entry = trim($entry);
 
     if ($entry !== '') {
-        $line = date('Y-m-d H:i:s') . ' — ' . $entry . PHP_EOL;
+        $now = new DateTime('now', new DateTimeZone('America/Chicago'));
+        $line = $now->format('Y-m-d H:i:s') . ' — ' . $entry . PHP_EOL;
         file_put_contents($logFile, $line, FILE_APPEND | LOCK_EX);
         $message = 'Entry saved.';
     } else {
