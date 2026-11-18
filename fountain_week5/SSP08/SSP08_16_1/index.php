@@ -88,10 +88,10 @@ $logSize = is_file($logFile) ? filesize($logFile) : 0;
             <input type="text" name="entry" maxlength="200">
         </label>
         <button type="submit">Save Entry</button>
+    </form>
 
-        <form method="post">
-            <button type="submit" name="action" value="clear">Clear Log</button>
-        </form>
+    <form method="post" onsubmit="return confirm('Are you sure you want to clear the log?');">
+        <button type="submit" name="action" value="clear">Clear Log</button>
     </form>
 
     <p><a href="?action=download">Download Log</a></p>
