@@ -116,6 +116,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $start > $end) {
             <?php endwhile; ?>
         </ul>
 
+        <h2>Countdown</h2>
+        <ul>
+            <?php
+            $counter = $end;
+            do {
+            ?>
+                <li><?= htmlspecialchars((string) $counter, ENT_QUOTES, 'UTF-8') ?></li>
+            <?php
+                $counter--;
+            } while ($counter >= $start);
+            ?>
+        </ul>
+
         <h2>Grade Lookup (switch)</h2>
         <?php if ($score >= 0): ?>
             <p>
