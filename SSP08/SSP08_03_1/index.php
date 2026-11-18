@@ -55,13 +55,20 @@ $score = (int)(filter_input(INPUT_POST, 'score', FILTER_VALIDATE_INT) ?? -1);
 if ($start < 1) {
     $start = 1;
 }
+
 if ($end > 100) {
     $end = 100;
 }
-if ($end < $start) {
-    $end = $start;
+
+$error = '';
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && $start > $end) {
+    $error = 'Start must be less than or equal to End.';
 }
+
 ?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -89,7 +96,11 @@ if ($end < $start) {
         <button type="submit">Run</button>
     </form>
 
-    <?php if ($_SERVER['REQUEST_METHOD'] === 'POST'): ?>
+    <?php if ($error !== ''): ?>
+        <p><?= htmlspecialchars($error, ENT_QUOTES, 'UTF-8') ?></p>
+    <?php endif; ?>
+
+    <?php if ($_SERVER['REQUEST_METHOD'] === 'POST' && $error === ''): ?>
         <h2>FizzBuzz (for loop, <?= (int)$start ?>–<?= (int)$end ?>)</h2>
         <ul>
             <?php for ($i = $start; $i <= $end; $i++): ?>
