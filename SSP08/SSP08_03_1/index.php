@@ -60,6 +60,18 @@ if ($end > 100) {
     $end = 100;
 }
 
+$word = trim((string) (
+    filter_input(INPUT_POST, 'word', FILTER_DEFAULT) ?? ''
+));
+
+$repeatCount = filter_input(INPUT_POST, 'repeat_count', FILTER_VALIDATE_INT);
+
+if (!is_int($repeatCount)) {
+    $repeatCount = 1;
+}
+
+$repeatCount = max(1, min(20, $repeatCount));
+
 $error = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && $start > $end) {
@@ -74,6 +86,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $start > $end) {
 <head>
     <meta charset="UTF-8">
     <title>Ex 03-1 Control Structures</title>
+    <style>
+        .result-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(5rem, 1fr));
+            gap: 0.5rem;
+            list-style: none;
+            padding: 0;
+        }
+
+        .result-grid li {
+            padding: 0.5rem;
+            text-align: center;
+            background: #f0f0f0;
+        }
+    </style>
 </head>
 <body>
     <h1>Control Structures Demo</h1>
@@ -93,6 +120,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $start > $end) {
             <input type="number" name="score" min="0" max="100"
                 value="<?= ($score >= 0 ? (int)$score : '') ?>">
         </label>
+        <label>Repeat word:
+            <input type="text" name="word"
+                value="<?= htmlspecialchars($word, ENT_QUOTES, 'UTF-8') ?>">
+        </label>
+
+        <label>Number of repetitions:
+            <input type="number" name="repeat_count" min="1" max="20"
+                value="<?= htmlspecialchars((string) $repeatCount, ENT_QUOTES, 'UTF-8') ?>">
+        </label>
         <button type="submit">Run</button>
     </form>
 
@@ -102,14 +138,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $start > $end) {
 
     <?php if ($_SERVER['REQUEST_METHOD'] === 'POST' && $error === ''): ?>
         <h2>FizzBuzz (for loop, <?= (int)$start ?>–<?= (int)$end ?>)</h2>
-        <ul>
+        <ul class="result-grid">
             <?php for ($i = $start; $i <= $end; $i++): ?>
                 <li><?= htmlspecialchars(fn_fizzbuzz($i), ENT_QUOTES, 'UTF-8') ?></li>
             <?php endfor; ?>
         </ul>
 
+        <h2>Repeat Word</h2>
+            <?php if ($word !== ''): ?>
+                <ul class="result-grid">
+                    <?php $repeat = 0; ?>
+                    <?php while ($repeat < $repeatCount): ?>
+                        <li><?= htmlspecialchars($word, ENT_QUOTES, 'UTF-8') ?></li>
+                        <?php $repeat++; ?>
+                    <?php endwhile; ?>
+                </ul>
+            <?php else: ?>
+                <p>Enter a word to repeat.</p>
+            <?php endif; ?>
+
         <h2>Day Names (while loop)</h2>
-        <ul>
+        <ul class="result-grid">
             <?php $d = 0; while ($d <= 6): ?>
                 <li><?= htmlspecialchars(fn_dayOfWeek($d), ENT_QUOTES, 'UTF-8') ?></li>
                 <?php $d++; ?>
@@ -117,7 +166,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $start > $end) {
         </ul>
 
         <h2>Countdown</h2>
-        <ul>
+        <ul class="result-grid">
             <?php
             $counter = $end;
             do {
